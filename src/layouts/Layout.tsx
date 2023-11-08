@@ -53,7 +53,8 @@ const Layout: React.FC<LayoutProps> = ({children}) => {
         },
         {
             title: "Список валют",
-            link: "/currency"
+            link: "/currency",
+            hidden: true
         },
         {
             title: "Список брендов",
@@ -65,7 +66,8 @@ const Layout: React.FC<LayoutProps> = ({children}) => {
         },
         {
             title: "Общая статистика",
-            link: "/statistic"
+            link: "/statistic",
+            hidden: true
         }
     ]
 

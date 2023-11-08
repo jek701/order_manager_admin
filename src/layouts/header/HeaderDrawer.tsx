@@ -117,7 +117,7 @@ const HeaderDrawer: React.FC<DrawerMenuProps> = ({active, onClose, list}) => {
                     <LeftArrowButton onClick={onClose} />
                 </div>
                 {list && list
-                    .filter(item => item.hidden !== false)
+                    .filter(item => !item.hidden)
                     .map((item, index) => (
                         <Link key={index} to={item.link} onClick={onClose} className={classes.listItem}>
                             {item.title}

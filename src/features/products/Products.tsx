@@ -14,7 +14,8 @@ const columns: ColumnsType<ProductType["data"][0]> = [
     {
         title: "Название",
         dataIndex: "item_name",
-        key: "item_name"
+        key: "item_name",
+        render: (value, record) => <span onClick={() => navigator.clipboard.writeText(record.id)}>{value}</span>
     },
     {
         title: "Цена (оригинальная)",

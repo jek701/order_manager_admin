@@ -30,5 +30,5 @@ export interface Brand {
         male_bought_count: number,
         average_delivery_time: number,
         currency_id: number
-    }
+    }[]
 }

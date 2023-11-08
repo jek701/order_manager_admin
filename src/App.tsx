@@ -7,6 +7,7 @@ const Login = React.lazy(() => import("src/features/auth/Login"))
 const Clients = React.lazy(() => import("src/features/clients/Clients"))
 const Products = React.lazy(() => import("src/features/products/Products"))
 const Orders = React.lazy(() => import("src/features/orders/Orders"))
+const Brands = React.lazy(() => import("src/features/brands/Brands"))
 const ErrorNotFound = React.lazy(() => import("src/components/ErrorNotFound"))
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
                         <Route path={"/clients"} element={<Clients />} />
                         <Route path={"/products"} element={<Products />} />
                         <Route path={"/orders"} element={<Orders />} />
+                        <Route path={"/brands"} element={<Brands />} />
                         <Route path={"/"} element={<div></div>} />
                         <Route path="*" element={<ErrorNotFound />} />
                     </Routes>
