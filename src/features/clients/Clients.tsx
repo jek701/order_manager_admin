@@ -5,12 +5,13 @@ import {ColumnsType} from "antd/es/table"
 import {Clients as ClientsType} from "../../types/Clients"
 import Link from "antd/es/typography/Link"
 import {formatPhone} from "../../utils/phoneNumberFormatter"
+import LoadingBlock from "../../components/LoadingBlock"
 
 interface ClientsProps {
 
 }
 
-const columns: ColumnsType<ClientsType> = [
+const columns: ColumnsType<ClientsType["data"][0]> = [
     {
         title: "Имя",
         dataIndex: "name",
@@ -50,16 +51,12 @@ const Clients: React.FC<ClientsProps> = ({}) => {
     const {data, isLoading} = useGetClientsQuery()
 
     if (isLoading) {
-        return <div>Loading...</div>
+        return <LoadingBlock />
     }
 
-    if (data) {
-        return (
-            <Table columns={columns} dataSource={data} />
-        )
-    }
-
-    return <div></div>
+    return (
+        <Table columns={columns} dataSource={data?.data} />
+    )
 }
 
 export default Clients

@@ -5,6 +5,7 @@ import LoadingBlock from "./components/LoadingBlock"
 
 const Login = React.lazy(() => import("src/features/auth/Login"))
 const Clients = React.lazy(() => import("src/features/clients/Clients"))
+const Products = React.lazy(() => import("src/features/products/Products"))
 const ErrorNotFound = React.lazy(() => import("src/components/ErrorNotFound"))
 
 const App = () => {
@@ -15,7 +16,9 @@ const App = () => {
                 <React.Suspense fallback={<LoadingBlock />}>
                     <Routes>
                         <Route path={"/login"} element={<Login/>}/>
-                        <Route path={"/"} element={<Clients />} />
+                        <Route path={"/clients"} element={<Clients />} />
+                        <Route path={"/products"} element={<Products />} />
+                        <Route path={"/"} element={<div></div>} />
                         <Route path="*" element={<ErrorNotFound />} />
                     </Routes>
                 </React.Suspense>

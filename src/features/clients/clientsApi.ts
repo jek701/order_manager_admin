@@ -7,7 +7,7 @@ export const clientsApi = createApi({
     baseQuery: apiConfig,
     tagTypes: ["clients"],
     endpoints: build => ({
-        getClients: build.query<Clients[], void>({
+        getClients: build.query<Clients, void>({
             query: () => ({
                 url: "clients",
                 method: "GET"

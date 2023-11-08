@@ -10,5 +10,5 @@ export interface Clients {
         profile_name?: string,
         profile_url?: string,
         address?: string
-    }
+    }[]
 }
