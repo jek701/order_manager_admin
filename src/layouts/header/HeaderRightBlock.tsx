@@ -61,12 +61,10 @@ const HeaderRightBlock: React.FC<HeaderRightBlockProps> = ({extra}) => {
             <div className={classes.firstNavBlock}>
                 {extra}
                 <Dropdown menu={{items}} arrow>
-                    <div>
-                        <Avatar
-                            icon={<UserOutlined />}
-                            style={{verticalAlign: "middle", background: "#016f4d"}}
-                        />
-                    </div>
+                    <Avatar
+                        icon={<UserOutlined />}
+                        style={{verticalAlign: "middle", background: "#016f4d"}}
+                    />
                 </Dropdown>
             </div>
         )

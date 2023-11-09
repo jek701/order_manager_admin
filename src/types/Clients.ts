@@ -9,6 +9,7 @@ export interface Clients {
         phone_number: string,
         profile_name?: string,
         profile_url?: string,
-        address?: string
+        address?: string,
+        created_at: string,
     }[]
 }

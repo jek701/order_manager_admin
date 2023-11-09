@@ -12,8 +12,9 @@ export interface Order {
     id: string
     order_date: string
     deliver_until: string
+    item_ids: string
     customer_id: string
-    order_status: string
+    order_status: OrderStatuses
     total_price: number
     items_original_price: number
     transportation_price: number

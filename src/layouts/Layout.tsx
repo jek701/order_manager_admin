@@ -61,10 +61,6 @@ const Layout: React.FC<LayoutProps> = ({children}) => {
             link: "/brands"
         },
         {
-            title: "Список админов",
-            link: "/admins"
-        },
-        {
             title: "Общая статистика",
             link: "/statistic",
             hidden: true

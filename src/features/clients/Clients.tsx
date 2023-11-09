@@ -1,11 +1,12 @@
-import React from "react"
+import React, {useState} from "react"
 import {useGetClientsQuery} from "./clientsApi"
-import {Table, Tag} from "antd"
+import {Button, Table, Tag} from "antd"
 import {ColumnsType} from "antd/es/table"
 import {Clients as ClientsType} from "../../types/Clients"
 import Link from "antd/es/typography/Link"
 import {formatPhone} from "../../utils/phoneNumberFormatter"
 import LoadingBlock from "../../components/LoadingBlock"
+import CreateClientModal from "./CreateClientModal"
 
 interface ClientsProps {
 
@@ -15,7 +16,8 @@ const columns: ColumnsType<ClientsType["data"][0]> = [
     {
         title: "Имя",
         dataIndex: "name",
-        key: "name"
+        key: "name",
+        render: (value, record) => <span onClick={() => navigator.clipboard.writeText(record.id.toString())}>{value}</span>
     },
     {
         title: "Фамилия",
@@ -49,14 +51,19 @@ const columns: ColumnsType<ClientsType["data"][0]> = [
 
 const Clients: React.FC<ClientsProps> = ({}) => {
     const {data, isLoading} = useGetClientsQuery()
+    const [modal, setModal] = useState(false)
 
     if (isLoading) {
         return <LoadingBlock />
     }
 
-    return (
+    return <>
+        <Button type={"primary"} onClick={() => setModal(true)}>Добавить нового клиента</Button>
+        <br/>
+        <br/>
         <Table columns={columns} dataSource={data?.data} />
-    )
+        <CreateClientModal modal={modal} setModal={setModal} />
+    </>
 }
 
 export default Clients
