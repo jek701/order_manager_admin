@@ -59,7 +59,7 @@ const Login: React.FC<LoginProps> = ({}) => {
 
     return <>
         <div className={styles.formModal}>
-            <Title>Добро пожаловать в систему менеджера заказов</Title>
+            <Title level={3}>Добро пожаловать в систему менеджера заказов</Title>
             <Form
                 layout={"vertical"}
                 name="normal_login"

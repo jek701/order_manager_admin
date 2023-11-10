@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {useGetDashboardQuery} from "./dashboardApi"
 import {Button, Card, Space, Tag} from "antd"
 import moment from "moment"
@@ -8,6 +8,8 @@ import LoadingBlock from "../../components/LoadingBlock"
 import {returnOrderStatus} from "../../utils/returnOrderStatus"
 import {formatPhone} from "../../utils/phoneNumberFormatter"
 import CreateClientModal from "../clients/CreateClientModal"
+import {getToken} from "../../utils/token"
+import {useNavigate} from "react-router-dom"
 
 interface DashboardProps {
 
@@ -16,6 +18,14 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({}) => {
     const {data, isSuccess, isLoading} = useGetDashboardQuery()
     const [newClientModal, setNewClientModal] = useState(false)
+    const token = getToken()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!token) {
+            navigate("/login")
+        }
+    }, [token])
 
     if (isLoading) <LoadingBlock />
 

@@ -7,6 +7,7 @@ import Link from "antd/es/typography/Link"
 import {formatPhone} from "../../utils/phoneNumberFormatter"
 import LoadingBlock from "../../components/LoadingBlock"
 import CreateClientModal from "./CreateClientModal"
+import ClientsActionButton from "./ClientsActionButton"
 
 interface ClientsProps {
 
@@ -45,7 +46,19 @@ const columns: ColumnsType<ClientsType["data"][0]> = [
         title: "Ссылка профиля",
         dataIndex: "profile_url",
         key: "profile_url",
-        render: value => <Link target={"_blank"} href={value}>{value}</Link>
+        render: value => <Link target={"_blank"} href={value}>Ссылка</Link>
+    },
+    {
+        title: "Адрес",
+        dataIndex: "address",
+        key: "address"
+    },
+    {
+        title: "Действия",
+        key: "actions",
+        render: (_, record) => {
+            return <ClientsActionButton record={record} />
+        }
     }
 ]
 
