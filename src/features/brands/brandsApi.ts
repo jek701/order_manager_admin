@@ -13,8 +13,11 @@ export const brandsApi = createApi({
                 method: "GET"
             }),
             providesTags: ["brands"]
-        })
+        }),
+        getBrandByID: builder.query<Brand, number>({
+            query: id => `brands/${id}`
+        }),
     })
 })
 
-export const {useGetBrandsQuery} = brandsApi
+export const {useGetBrandsQuery, useGetBrandByIDQuery} = brandsApi

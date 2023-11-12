@@ -14,6 +14,7 @@ export interface Products {
         brand_name: string,
         currency_sign: string | null,
         currency_name: string
+        brand?: Brand["data"][0]
     }[]
 }
 

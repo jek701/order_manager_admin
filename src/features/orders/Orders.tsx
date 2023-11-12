@@ -2,10 +2,11 @@ import React from "react"
 import {useGetOrdersQuery} from "./ordersApi"
 import {ColumnsType} from "antd/es/table"
 import {Order} from "../../types/Orders"
-import {Table} from "antd"
+import {Table, Tag} from "antd"
 import moment from "moment"
 import Profile from "../../components/Profile"
 import {returnOrderStatus} from "../../utils/returnOrderStatus"
+import {useNavigate} from "react-router-dom"
 
 interface OrdersProps {
 
@@ -29,7 +30,7 @@ const columns: ColumnsType<Order> = [
         title: "Статус",
         dataIndex: "order_status",
         key: "status",
-        render: status => returnOrderStatus(status)
+        render: status => <Tag>{returnOrderStatus(status)}</Tag>
     },
     {
         title: "Итоговая цена",
@@ -60,14 +61,28 @@ const columns: ColumnsType<Order> = [
         dataIndex: "accepted_by",
         key: "accepted_by",
         render: (_, record) => record.admin.name
-    }
+    },
+    // {
+    //     title: "Действия",
+    //     dataIndex: "actions",
+    //     key: "actions",
+    //     render: (_, record) => <OrderActionButton record={record} />
+    // }
 ]
 
 const Orders: React.FC<OrdersProps> = ({}) => {
-    const {data} = useGetOrdersQuery()
+    const {data} = useGetOrdersQuery({})
+    const navigate = useNavigate()
     return (
         <div>
-            <Table columns={columns} dataSource={data?.data} />
+            <Table
+                onRow={record => ({
+                    onClick: () => navigate(`/orders/${record.id}`)
+                })}
+                style={{cursor: "pointer"}}
+                columns={columns}
+                dataSource={data?.data}
+            />
         </div>
     )
 }
