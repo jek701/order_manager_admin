@@ -7,6 +7,7 @@ import moment from "moment"
 import Profile from "../../components/Profile"
 import {returnOrderStatus} from "../../utils/returnOrderStatus"
 import {useNavigate} from "react-router-dom"
+import LoadingBlock from "../../components/LoadingBlock"
 
 interface OrdersProps {
 
@@ -71,8 +72,11 @@ const columns: ColumnsType<Order> = [
 ]
 
 const Orders: React.FC<OrdersProps> = ({}) => {
-    const {data} = useGetOrdersQuery({})
+    const {data, isLoading} = useGetOrdersQuery({})
     const navigate = useNavigate()
+
+    if (isLoading) return <LoadingBlock />
+
     return (
         <div>
             <Table

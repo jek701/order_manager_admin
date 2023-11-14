@@ -29,7 +29,7 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
         }
     }, [token])
 
-    if (isLoading) <LoadingBlock />
+    if (isLoading) return <LoadingBlock />
 
     if (isSuccess && data) {
         return <>
