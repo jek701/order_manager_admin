@@ -47,7 +47,7 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
                 <Space direction={"vertical"}>
                     <Title level={3}>Заказы за последние 24 часа <Button onClick={() => setNewOrderModal(true)}>Добавить новый заказ</Button></Title>
                     <Space direction="horizontal" size={"large"} wrap>
-                        {data.data.order.map((order) => {
+                        {data.data.order.length > 0 && data.data.order.map((order) => {
                             return (
                                 <Card key={order.id} title={`ID: ${order.id}`} style={{ width: 300 }}>
                                     <p>Статус: <strong>{returnOrderStatus(order.order_status)}</strong></p>
@@ -67,7 +67,7 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
                 <Space direction={"vertical"}>
                     <Title level={3}>Клиенты, прошедшие регистрацию за последние 24 часа <Button onClick={() => setNewClientModal(true)}>Добавить нового клиента</Button></Title>
                     <Space direction="horizontal" size="large">
-                        {data.data.client.map((client) => {
+                        {data.data.client.length > 0 && data.data.client.map((client) => {
                             return (
                                 <Card key={`client_id_${client.id}`} title={`ID: ${client.id}`} style={{ width: 300 }}>
                                     <p>Имя: <strong>{client.name}</strong></p>
