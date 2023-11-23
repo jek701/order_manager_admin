@@ -63,7 +63,7 @@ const columns: ColumnsType<ClientsType["data"][0]> = [
 ]
 
 const Clients: React.FC<ClientsProps> = ({}) => {
-    const {data, isLoading} = useGetClientsQuery()
+    const {data, isLoading, isFetching} = useGetClientsQuery()
     const [modal, setModal] = useState(false)
 
     if (isLoading) {
@@ -74,7 +74,7 @@ const Clients: React.FC<ClientsProps> = ({}) => {
         <Button type={"primary"} onClick={() => setModal(true)}>Добавить нового клиента</Button>
         <br/>
         <br/>
-        <Table columns={columns} dataSource={data?.data} />
+        <Table loading={isFetching} columns={columns} dataSource={data?.data} />
         <CreateClientModal modal={modal} setModal={setModal} />
     </>
 }

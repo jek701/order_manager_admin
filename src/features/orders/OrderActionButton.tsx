@@ -73,7 +73,7 @@ const OrderActionButton: React.FC<OrderActionButtonProps> = ({record}) => {
                 notification.error({
                     message: "Ошибка",
                     // @ts-ignore
-                    description: deleteError.data.message
+                    description: deleteError.data.message.ru
                 })
             }
         }

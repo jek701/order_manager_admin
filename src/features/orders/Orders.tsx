@@ -9,11 +9,6 @@ import {returnOrderStatus} from "../../utils/returnOrderStatus"
 import {useNavigate} from "react-router-dom"
 import LoadingBlock from "../../components/LoadingBlock"
 
-interface OrdersProps {
-
-}
-
-
 const columns: ColumnsType<Order> = [
     {
         title: "Дата заказа",
@@ -55,14 +50,14 @@ const columns: ColumnsType<Order> = [
         title: "Клиент",
         dataIndex: "client",
         key: "client",
-        render: (_, record) => <Profile name={record.customer.name} phone={record.customer.phone_number} />
+        render: (_, record) => <Profile name={record.customer?.name} phone={record.customer?.phone_number} />
     },
     {
         title: "Кто принял заказ",
         dataIndex: "accepted_by",
         key: "accepted_by",
         render: (_, record) => record.admin.name
-    },
+    }
     // {
     //     title: "Действия",
     //     dataIndex: "actions",
@@ -71,8 +66,8 @@ const columns: ColumnsType<Order> = [
     // }
 ]
 
-const Orders: React.FC<OrdersProps> = ({}) => {
-    const {data, isLoading} = useGetOrdersQuery({})
+const Orders = () => {
+    const {data, isLoading, isFetching} = useGetOrdersQuery({})
     const navigate = useNavigate()
 
     if (isLoading) return <LoadingBlock />
@@ -83,6 +78,7 @@ const Orders: React.FC<OrdersProps> = ({}) => {
                 onRow={record => ({
                     onClick: () => navigate(`/orders/${record.id}`)
                 })}
+                loading={isFetching}
                 style={{cursor: "pointer"}}
                 columns={columns}
                 dataSource={data?.data}

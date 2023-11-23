@@ -22,7 +22,9 @@ export interface Order {
     items: Products["data"]
     customer: Clients["data"][0]
     customerOrders: Orders["data"]
-    admin: Admin["data"]
+    admin: Admin
+    delivered_to_destination?: string
+    delivered_to_client?: string
 }
 
 export type OrderStatuses = "created" | "ordered" | "sent_to_destination_country" | "arrived_at_destination_country" | "sent" | "closed" | "canceled"

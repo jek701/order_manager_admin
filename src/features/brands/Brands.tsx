@@ -1,8 +1,11 @@
-import React from "react"
+import React, {useState} from "react"
 import {useGetBrandsQuery} from "./brandsApi"
 import {ColumnsType} from "antd/es/table"
 import {Brand} from "../../types/Products"
-import {Table} from "antd"
+import {Button, Table} from "antd"
+import LoadingBlock from "../../components/LoadingBlock"
+import CreateBrandModal from "./CreateBrandModal"
+import BrandActionButton from "./BrandActionButton"
 
 interface BrandsProps {
 
@@ -17,27 +20,43 @@ const columns: ColumnsType<Brand["data"][0]> = [
     {
         title: "Количество товаров",
         dataIndex: "item_count",
-        key: "count"
+        key: "count",
+        render: (value: number) => value > 0 ? <span>{value} шт.</span> : <span>-</span>
     },
     {
         title: "Логотип бренда",
         dataIndex: "brand_icon",
         key: "logo",
-        render: (value: string) => <img width={200} src={value} alt="brand logo" />
+        render: (value: string) => value ? <img width={200} src={value} alt="brand logo"/> : <span>-</span>
     },
     {
         title: "Продано товаров",
         dataIndex: "sold_items_count",
         key: "sold",
         render: (value: number) => value > 0 ? <span>{value} шт.</span> : <span>-</span>
+    },
+    {
+        title: "Действия",
+        key: "actions",
+        render: (_, record) => {
+            return <BrandActionButton record={record} />
+        }
     }
 ]
 
 const Brands: React.FC<BrandsProps> = ({}) => {
-    const {data} = useGetBrandsQuery()
-    return (
-        <Table columns={columns} dataSource={data?.data} />
-    )
+    const {data, isLoading, isFetching} = useGetBrandsQuery()
+    const [modal, setModal] = useState(false)
+
+    if (isLoading) return <LoadingBlock/>
+
+    return <>
+        <Button type={"primary"} onClick={() => setModal(true)}>Добавить новый бренд</Button>
+        <br/>
+        <br/>
+        <Table loading={isFetching} columns={columns} dataSource={data?.data}/>
+        <CreateBrandModal modal={modal} setModal={setModal}/>
+    </>
 }
 
 export default Brands

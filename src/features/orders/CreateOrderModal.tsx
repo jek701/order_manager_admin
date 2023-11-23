@@ -51,7 +51,7 @@ const CreateOrderModal: React.FC<CreateOrderModalProps> = ({modal, setModal}) =>
             notification.error({
                 message: "Ошибка",
                 // @ts-ignore
-                description: orderCreateError?.data.message
+                description: orderCreateError?.data.message.ru
             })
         }
     }, [isOrderCreated, isOrderCreating, isOrderCreateError, orderCreateError])

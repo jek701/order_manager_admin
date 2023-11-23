@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react"
+import {Brand} from "../../types/Products"
 import {Button, Dropdown, MenuProps, Modal, notification} from "antd"
 import {DeleteOutlined, DownOutlined, EditOutlined} from "@ant-design/icons"
-import {Clients as ClientsType} from "../../types/Clients"
-import {useDeleteClientMutation, useEditCustomerMutation} from "./clientsApi"
-import ClientForm from "./ClientForm"
-import {CreateClientRequestProps} from "./CreateClientModal"
+import {CreateBrandRequest, useDeleteBrandMutation, useEditBrandMutation} from "./brandsApi"
+import BrandForm from "./BrandForm"
 
-interface ClientsActionButtonProps {
-    record: ClientsType["data"][0]
+interface BrandActionButtonProps {
+    record: Brand["data"][0]
 }
 
 const items: MenuProps["items"] = [
@@ -22,17 +21,26 @@ const items: MenuProps["items"] = [
     }
 ]
 
-const ClientsActionButton: React.FC<ClientsActionButtonProps> = ({record}) => {
+const BrandActionButton: React.FC<BrandActionButtonProps> = ({record}) => {
     const [deleteModal, setDeleteModal] = useState(false)
     const [editModal, setEditModal] = useState(false)
-    const [currentClientId, setCurrentClientId] = useState<number | undefined>(undefined)
+    const [currentBrandId, setCurrentBrandId] = useState<number | undefined>(undefined)
 
-    // APIs
-    const [deleteCustomer, {isLoading: isDeleting, isSuccess: isDeleted, isError: isDeleteError, error: deleteError}] = useDeleteClientMutation()
-    const [editCustomer, {isLoading: isEditing, isSuccess: isEdited, isError: isEditError, error: editError}] = useEditCustomerMutation()
+    const [deleteBrand, {
+        isLoading: isDeleting,
+        isSuccess: isDeleted,
+        isError: isDeleteError,
+        error: deleteError
+    }] = useDeleteBrandMutation()
+    const [editBrand, {
+        isLoading: isEditing,
+        isSuccess: isEdited,
+        isError: isEditError,
+        error: editError
+    }] = useEditBrandMutation()
 
     const onActionClickHandler = (clientId: number, key: string) => {
-        setCurrentClientId(clientId)
+        setCurrentBrandId(clientId)
         if (key === "delete") {
             setDeleteModal(true)
         }
@@ -42,16 +50,16 @@ const ClientsActionButton: React.FC<ClientsActionButtonProps> = ({record}) => {
     }
 
     const onDeleteHandler = () => {
-        if (currentClientId) {
-            deleteCustomer({id: currentClientId})
+        if (currentBrandId) {
+            deleteBrand(currentBrandId)
         }
     }
 
-    const onEditHandler = (values: CreateClientRequestProps) => {
-        if (currentClientId) {
-            editCustomer({
-                id: currentClientId.toString(),
-                ...values
+    const onEditHandler = (value: CreateBrandRequest) => {
+        if (currentBrandId) {
+            editBrand({
+                id: currentBrandId,
+                ...value
             })
         }
     }
@@ -59,7 +67,7 @@ const ClientsActionButton: React.FC<ClientsActionButtonProps> = ({record}) => {
     const onCloseHandler = () => {
         setDeleteModal(false)
         setEditModal(false)
-        setCurrentClientId(undefined)
+        setCurrentBrandId(undefined)
     }
 
     useEffect(() => {
@@ -67,7 +75,7 @@ const ClientsActionButton: React.FC<ClientsActionButtonProps> = ({record}) => {
             if (isDeleted) {
                 notification.success({
                     message: "Успешно",
-                    description: "Клиент успешно удален"
+                    description: "Бренд успешно удален"
                 })
                 onCloseHandler()
             }
@@ -86,7 +94,7 @@ const ClientsActionButton: React.FC<ClientsActionButtonProps> = ({record}) => {
             if (isEdited) {
                 notification.success({
                     message: "Успешно",
-                    description: "Клиент успешно изменен"
+                    description: "Бренд успешно изменен"
                 })
                 onCloseHandler()
             }
@@ -102,10 +110,10 @@ const ClientsActionButton: React.FC<ClientsActionButtonProps> = ({record}) => {
 
     return <>
         <Dropdown trigger={["click"]} menu={{items, onClick: items => onActionClickHandler(record.id, items.key)}}>
-            <Button>Больше <DownOutlined /></Button>
+            <Button>Больше <DownOutlined/></Button>
         </Dropdown>
         <Modal
-            title={"Вы точно хотите удалить пользователя?"}
+            title={"Вы точно хотите удалить бренд?"}
             open={deleteModal}
             onCancel={onCloseHandler}
             onOk={onDeleteHandler}
@@ -114,20 +122,21 @@ const ClientsActionButton: React.FC<ClientsActionButtonProps> = ({record}) => {
             cancelText={"Отменить"}
         />
         <Modal
-            title={"Изменить пользователя"}
+            title={"Изменить бренд"}
             open={editModal}
             onCancel={onCloseHandler}
-            okText={"Изменить"}
-            cancelText={"Отменить"}
             okButtonProps={{
                 htmlType: "submit",
-                form: "client-form",
+                form: "brand-form",
                 loading: isEditing
             }}
+            confirmLoading={isEditing}
+            okText={"Изменить"}
+            cancelText={"Отменить"}
         >
-            <ClientForm onFinish={onEditHandler} initialValues={record} />
+            <BrandForm onFinish={onEditHandler} initialValues={record}/>
         </Modal>
     </>
 }
 
-export default ClientsActionButton
+export default BrandActionButton

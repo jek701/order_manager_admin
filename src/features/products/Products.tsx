@@ -6,10 +6,6 @@ import {Table, Tag} from "antd"
 import LoadingBlock from "../../components/LoadingBlock"
 import Link from "antd/es/typography/Link"
 
-interface ProductsProps {
-
-}
-
 const columns: ColumnsType<ProductType["data"][0]> = [
     {
         title: "Название",
@@ -59,15 +55,15 @@ const columns: ColumnsType<ProductType["data"][0]> = [
     }
 ]
 
-const Products: React.FC<ProductsProps> = ({}) => {
-    const {data, isLoading} = useGetAllProductsQuery()
+const Products = () => {
+    const {data, isLoading, isFetching} = useGetAllProductsQuery()
 
     if (isLoading) {
         return <LoadingBlock />
     }
 
     return (
-        <Table columns={columns} dataSource={data?.data} />
+        <Table loading={isFetching} columns={columns} dataSource={data?.data} />
     )
 }
 

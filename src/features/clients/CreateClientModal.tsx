@@ -57,7 +57,7 @@ const CreateClientModal: React.FC<CreateClientModalProps> = ({modal, setModal}) 
             notification.error({
                 message: "Ошибка",
                 // @ts-ignore
-                description: clientCreateError?.data.message
+                description: clientCreateError?.data.message.ru
             })
         }
     }, [isClientCreated, isClientCreating, isClientCreateError, clientCreateError])

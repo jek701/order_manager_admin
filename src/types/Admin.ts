@@ -1,10 +1,12 @@
-export interface Admin {
+export interface AdminResponse {
     status: boolean
     message: string
-    data: {
-        id: number
-        name: string
-        phone_number: string
-        role: "super_admin" | "admin"
-    }
+    data: Admin[]
+}
+
+export interface Admin {
+    id: number
+    name: string
+    phone_number: string
+    role: "super_admin" | "admin" | "pending"
 }

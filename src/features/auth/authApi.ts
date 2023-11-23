@@ -19,7 +19,11 @@ export const authApi = createApi({
                 body: data
             })
         }),
-        getMe: build.query<Admin, void>({
+        getMe: build.query<{
+            status: boolean
+            message: string
+            data: Admin
+        }, void>({
             query: () => ({
                 url: "/me",
                 method: "GET"

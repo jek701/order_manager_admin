@@ -6,6 +6,7 @@ import {ordersApi} from "./features/orders/ordersApi"
 import {authApi} from "./features/auth/authApi"
 import {brandsApi} from "./features/brands/brandsApi"
 import {dashboardApi} from "./features/dashboard/dashboardApi"
+import {adminsApi} from "./features/admins/adminsApi"
 import auth from "./features/auth/authSlice"
 
 const reducers = {
@@ -15,6 +16,7 @@ const reducers = {
     [ordersApi.reducerPath]: ordersApi.reducer,
     [brandsApi.reducerPath]: brandsApi.reducer,
     [dashboardApi.reducerPath]: dashboardApi.reducer,
+    [adminsApi.reducerPath]: adminsApi.reducer,
     auth
 }
 
@@ -27,6 +29,7 @@ const store = configureStore({
         .concat(ordersApi.middleware)
         .concat(brandsApi.middleware)
         .concat(dashboardApi.middleware)
+        .concat(adminsApi.middleware)
 })
 
 export type StoreState = ReturnType<typeof store.getState>
