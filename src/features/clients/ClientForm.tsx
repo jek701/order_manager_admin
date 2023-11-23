@@ -48,7 +48,10 @@ const ClientForm: React.FC<ClientFormProps> = ({initialValues, onFinish}) => {
             <Form.Item name={"profile_url"} label={"Ссылка профиля"}>
                 <Input placeholder={"Вставьте ссылку профиля клиента"} />
             </Form.Item>
-            <Form.Item name={"address"} label={"Адрес клиента"}>
+            <Form.Item name={"address"} label={"Адрес клиента"} rules={[{
+                required: true,
+                message: "Пожалуйста, укажите адрес клиента"
+            }]}>
                 <Input placeholder={"Введите адрес клиента"} />
             </Form.Item>
         </Form>

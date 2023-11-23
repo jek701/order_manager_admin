@@ -40,18 +40,20 @@ const columns: ColumnsType<ClientsType["data"][0]> = [
     {
         title: "Имя профиля",
         dataIndex: "profile_name",
-        key: "profile_name"
+        key: "profile_name",
+        render: value => value ? <span>{value}</span> : <Tag color={"red"}>Не указано</Tag>
     },
     {
         title: "Ссылка профиля",
         dataIndex: "profile_url",
         key: "profile_url",
-        render: value => <Link target={"_blank"} href={value}>Ссылка</Link>
+        render: value => value ? <Link target={"_blank"} href={value}>Ссылка</Link> : <Tag color={"red"}>Не указана</Tag>
     },
     {
         title: "Адрес",
         dataIndex: "address",
-        key: "address"
+        key: "address",
+        render: value => value ? <span>{value}</span> : <Tag color={"red"}>Не указан</Tag>
     },
     {
         title: "Действия",

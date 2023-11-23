@@ -68,6 +68,7 @@ const CreateClientModal: React.FC<CreateClientModalProps> = ({modal, setModal}) 
             onCancel={() => setModal(false)}
             title={"Добавить нового пользователя"}
             open={modal}
+            confirmLoading={isClientCreating}
             okButtonProps={{
                 disabled: isClientCreating,
                 form: "client-form",
