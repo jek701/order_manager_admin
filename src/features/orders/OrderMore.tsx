@@ -24,7 +24,7 @@ const OrderMore: React.FC<OrderMoreProps> = ({}) => {
         refetchOnMountOrArgChange: true
     })
 
-    if (isLoading) <LoadingBlock />
+    if (isLoading) return <LoadingBlock />
 
     if (data && data.data) {
         return (
