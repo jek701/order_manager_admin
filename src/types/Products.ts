@@ -1,21 +1,23 @@
 export interface Products {
     status: boolean,
     message: string,
-    data: {
-        id: string,
-        item_name: string,
-        item_original_price: number,
-        item_price_with_profit: number,
-        brand_id: number,
-        item_url: string,
-        item_weight: number,
-        is_available: boolean,
-        average_delivery_time: number,
-        brand_name: string,
-        currency_sign: string | null,
-        currency_name: string
-        brand?: Brand["data"][0]
-    }[]
+    data: Product[]
+}
+
+export interface Product {
+    id: string,
+    item_name: string,
+    item_original_price: number,
+    item_price_with_profit: number,
+    brand_id: number,
+    item_url: string,
+    item_weight: number,
+    is_available: boolean,
+    average_delivery_time: number,
+    brand_name: string,
+    currency_sign: string | null,
+    currency_name: string
+    brand?: Brand["data"][0]
 }
 
 export interface Brand {

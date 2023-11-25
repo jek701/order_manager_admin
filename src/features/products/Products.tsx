@@ -1,10 +1,12 @@
-import React from "react"
+import React, {useState} from "react"
 import {useGetAllProductsQuery} from "./productsApi"
 import {ColumnsType} from "antd/es/table"
 import {Products as ProductType} from "../../types/Products"
-import {Table, Tag} from "antd"
+import {Button, Table, Tag} from "antd"
 import LoadingBlock from "../../components/LoadingBlock"
 import Link from "antd/es/typography/Link"
+import ProductsActionButton from "./ProductsActionButton"
+import CreateProductModal from "./CreateProductModal"
 
 const columns: ColumnsType<ProductType["data"][0]> = [
     {
@@ -17,8 +19,8 @@ const columns: ColumnsType<ProductType["data"][0]> = [
         title: "Цена (оригинальная)",
         dataIndex: "item_original_price",
         key: "item_original_price",
-        render: (value, record) => {
-            return `${value} ${record.currency_sign || record.currency_name}`
+        render: (value) => {
+            return `${value}$`
         }
     },
     {
@@ -27,7 +29,7 @@ const columns: ColumnsType<ProductType["data"][0]> = [
         key: "item_price_with_profit",
         render: (value, record) => {
             const profit_percent = record.item_price_with_profit / record.item_original_price * 100 - 100
-            return `${value} ${record.currency_sign} (+${profit_percent.toFixed(2)}%)`
+            return `${value}$ (+${profit_percent.toFixed(2)}%)`
         }
     },
     {
@@ -52,19 +54,30 @@ const columns: ColumnsType<ProductType["data"][0]> = [
         title: "Бренд",
         dataIndex: "brand_name",
         key: "brand"
+    },
+    {
+        title: "Действия",
+        dataIndex: "actions",
+        key: "actions",
+        render: (_, record) => <ProductsActionButton record={record}/>
     }
 ]
 
 const Products = () => {
     const {data, isLoading, isFetching} = useGetAllProductsQuery()
+    const [modal, setModal] = useState(false)
 
     if (isLoading) {
-        return <LoadingBlock />
+        return <LoadingBlock/>
     }
 
-    return (
-        <Table loading={isFetching} columns={columns} dataSource={data?.data} />
-    )
+    return <>
+        <Button type={"primary"} onClick={() => setModal(true)}>Добавить нового клиента</Button>
+        <br/>
+        <br/>
+        <Table loading={isFetching} columns={columns} dataSource={data?.data}/>
+        <CreateProductModal modal={modal} setModal={setModal} />
+    </>
 }
 
 export default Products
