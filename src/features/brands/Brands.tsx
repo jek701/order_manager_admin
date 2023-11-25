@@ -6,6 +6,7 @@ import {Button, Table} from "antd"
 import LoadingBlock from "../../components/LoadingBlock"
 import CreateBrandModal from "./CreateBrandModal"
 import BrandActionButton from "./BrandActionButton"
+import Title from "antd/es/typography/Title"
 
 interface BrandsProps {
 
@@ -51,6 +52,7 @@ const Brands: React.FC<BrandsProps> = ({}) => {
     if (isLoading) return <LoadingBlock/>
 
     return <>
+        <Title level={1} style={{textAlign: "center"}}>Бренды</Title>
         <Button type={"primary"} onClick={() => setModal(true)}>Добавить новый бренд</Button>
         <br/>
         <br/>

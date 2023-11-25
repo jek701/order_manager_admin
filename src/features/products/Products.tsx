@@ -7,6 +7,7 @@ import LoadingBlock from "../../components/LoadingBlock"
 import Link from "antd/es/typography/Link"
 import ProductsActionButton from "./ProductsActionButton"
 import CreateProductModal from "./CreateProductModal"
+import Title from "antd/es/typography/Title"
 
 const columns: ColumnsType<ProductType["data"][0]> = [
     {
@@ -72,7 +73,8 @@ const Products = () => {
     }
 
     return <>
-        <Button type={"primary"} onClick={() => setModal(true)}>Добавить нового клиента</Button>
+        <Title level={1} style={{textAlign: "center"}}>Товары</Title>
+        <Button type={"primary"} onClick={() => setModal(true)}>Добавить новый продукт</Button>
         <br/>
         <br/>
         <Table loading={isFetching} columns={columns} dataSource={data?.data}/>

@@ -55,11 +55,11 @@ const ProductsForm: React.FC<ProductsFormProps> = ({initialValues, onFinish}) =>
                     [
                         {
                             label: "Доступно",
-                            value: true
+                            value: 1
                         },
                         {
                             label: "Не доступно",
-                            value: false
+                            value: 0
                         }
                     ]
                 }/>

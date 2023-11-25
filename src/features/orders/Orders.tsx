@@ -8,6 +8,7 @@ import Profile from "../../components/Profile"
 import {returnOrderStatus} from "../../utils/returnOrderStatus"
 import {useNavigate} from "react-router-dom"
 import LoadingBlock from "../../components/LoadingBlock"
+import Title from "antd/es/typography/Title"
 
 const columns: ColumnsType<Order> = [
     {
@@ -72,19 +73,18 @@ const Orders = () => {
 
     if (isLoading) return <LoadingBlock />
 
-    return (
-        <div>
-            <Table
-                onRow={record => ({
-                    onClick: () => navigate(`/orders/${record.id}`)
-                })}
-                loading={isFetching}
-                style={{cursor: "pointer"}}
-                columns={columns}
-                dataSource={data?.data}
-            />
-        </div>
-    )
+    return <>
+        <Title level={1} style={{textAlign: "center"}}>Заказы</Title>
+        <Table
+            onRow={record => ({
+                onClick: () => navigate(`/orders/${record.id}`)
+            })}
+            loading={isFetching}
+            style={{cursor: "pointer"}}
+            columns={columns}
+            dataSource={data?.data}
+        />
+    </>
 }
 
 export default Orders

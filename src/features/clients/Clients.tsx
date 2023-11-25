@@ -8,6 +8,7 @@ import {formatPhone} from "../../utils/phoneNumberFormatter"
 import LoadingBlock from "../../components/LoadingBlock"
 import CreateClientModal from "./CreateClientModal"
 import ClientsActionButton from "./ClientsActionButton"
+import Title from "antd/es/typography/Title"
 
 interface ClientsProps {
 
@@ -73,6 +74,7 @@ const Clients: React.FC<ClientsProps> = ({}) => {
     }
 
     return <>
+        <Title level={1} style={{textAlign: "center"}}>Клиенты</Title>
         <Button type={"primary"} onClick={() => setModal(true)}>Добавить нового клиента</Button>
         <br/>
         <br/>
