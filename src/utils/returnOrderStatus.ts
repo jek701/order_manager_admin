@@ -5,13 +5,13 @@ export const returnOrderStatus = (status: OrderStatuses) => {
         case "created":
             return "Создан"
         case "ordered":
-            return "Заказан"
+            return "Товары заказаны"
         case "sent_to_destination_country":
             return "Отправлен в страну назначения"
         case "arrived_at_destination_country":
-            return "Прибыл в страну назначения"
+            return "Прибыло в страну назначения"
         case "sent":
-            return "Отправлен"
+            return "Отправлен клиенту"
         case "canceled":
             return "Отменен"
         case "closed":

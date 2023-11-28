@@ -25,6 +25,10 @@ export interface Order {
     admin: Admin
     delivered_to_destination?: string
     delivered_to_client?: string
+    sent_to_destination_country_date?: string
+    cancel_closed_date?: string
+    ordered_date?: string
+    cancel_reason?: string
 }
 
 export type OrderStatuses = "created" | "ordered" | "sent_to_destination_country" | "arrived_at_destination_country" | "sent" | "closed" | "canceled"

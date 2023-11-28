@@ -11,6 +11,7 @@ import ColWithTitle from "../../components/ColWithTitle"
 import {formatPhone} from "../../utils/phoneNumberFormatter"
 import LeftArrowButton from "../../components/LeftArrowButton"
 import MenuDrawer from "../../components/MenuDrawer"
+import OrderStatusChangeBlock from "./OrderStatusChangeBlock"
 
 interface OrderMoreProps {
 
@@ -19,12 +20,12 @@ interface OrderMoreProps {
 const OrderMore: React.FC<OrderMoreProps> = ({}) => {
     const params = useParams<{ id: string }>()
     const navigate = useNavigate()
-    const {data, isLoading, isError} = useGetOrderByIDQuery(params.id, {
+    const {data, isLoading, isError, isFetching} = useGetOrderByIDQuery(params.id, {
         skip: !params.id,
         refetchOnMountOrArgChange: true
     })
 
-    if (isLoading) return <LoadingBlock />
+    if (isLoading || isFetching) return <LoadingBlock/>
 
     if (data && data.data) {
         return (
@@ -53,7 +54,7 @@ const OrderMore: React.FC<OrderMoreProps> = ({}) => {
                                             return {
                                                 label: <div>
                                                     <p>Название: <a href={item.item_url}
-                                                                       target={"_blank"}>{item.item_name}</a></p>
+                                                                    target={"_blank"}>{item.item_name}</a></p>
                                                     <p>Бренд: <strong>{item.brand?.brand_name}</strong></p>
                                                     <p>Цена (продажная): <strong>{item.item_price_with_profit}$</strong>
                                                     </p>
@@ -110,6 +111,16 @@ const OrderMore: React.FC<OrderMoreProps> = ({}) => {
                                 <InfoBlock title={"Имя администратора:"}>{data?.data?.admin.name}</InfoBlock>
                                 <InfoBlock
                                     title={"Телефон администратора:"}>{formatPhone(data?.data?.admin.phone_number)}</InfoBlock>
+                            </ColWithTitle>
+                        </Col>
+                        <Col span={24}>
+                            <ColWithTitle title={"Статус заказа"}>
+                                <OrderStatusChangeBlock cancel_closed_date={data.data.cancel_closed_date}
+                                                        cancel_reason={data.data.cancel_reason}
+                                                        delivered_to_client={data.data.delivered_to_client}
+                                                        ordered_date={data.data.ordered_date}
+                                                        delivered_to_destination={data.data.delivered_to_destination}
+                                                        id={data.data.id} order_status={data.data.order_status}/>
                             </ColWithTitle>
                         </Col>
                     </Col>

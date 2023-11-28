@@ -8,6 +8,7 @@ import "antd/dist/reset.css"
 import ThemeProvider from "./layouts/ThemeProvider"
 import "./assets/styles/font-face.css"
 import "./assets/styles/globals.css"
+import locale from "antd/locale/ru_RU"
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -15,6 +16,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <ConfigProvider
+            locale={locale}
             theme={{
                 token: {
                     colorPrimary: "#006f4c",

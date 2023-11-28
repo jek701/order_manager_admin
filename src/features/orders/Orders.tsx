@@ -1,14 +1,15 @@
-import React from "react"
+import React, {useState} from "react"
 import {useGetOrdersQuery} from "./ordersApi"
 import {ColumnsType} from "antd/es/table"
-import {Order} from "../../types/Orders"
-import {Table, Tag} from "antd"
+import {Order, OrderStatuses} from "../../types/Orders"
+import {Button, Segmented, Table, Tag} from "antd"
 import moment from "moment"
 import Profile from "../../components/Profile"
 import {returnOrderStatus} from "../../utils/returnOrderStatus"
 import {useNavigate} from "react-router-dom"
 import LoadingBlock from "../../components/LoadingBlock"
 import Title from "antd/es/typography/Title"
+import CreateOrderModal from "./CreateOrderModal"
 
 const columns: ColumnsType<Order> = [
     {
@@ -51,7 +52,7 @@ const columns: ColumnsType<Order> = [
         title: "Клиент",
         dataIndex: "client",
         key: "client",
-        render: (_, record) => <Profile name={record.customer?.name} phone={record.customer?.phone_number} />
+        render: (_, record) => <Profile name={record.customer?.name} phone={record.customer?.phone_number}/>
     },
     {
         title: "Кто принял заказ",
@@ -67,14 +68,47 @@ const columns: ColumnsType<Order> = [
     // }
 ]
 
+const orderStatusList = [
+    {
+        label: "Активные заказы",
+        value: "active"
+    },
+    {
+        label: "Закрытые заказы",
+        value: "closed"
+    },
+    {
+        label: "Отмененные заказы",
+        value: "canceled"
+    }
+]
+
 const Orders = () => {
-    const {data, isLoading, isFetching} = useGetOrdersQuery({})
+    const [selectedStatus, setSelectedStatus] = useState<OrderStatuses | undefined>(undefined)
+    const {data, isLoading, isFetching, refetch} = useGetOrdersQuery({order_status: selectedStatus}, {refetchOnMountOrArgChange: true})
+    const [modal, setModal] = useState(false)
     const navigate = useNavigate()
 
-    if (isLoading) return <LoadingBlock />
+    const onStatusChangeHandler = (value: string) => {
+        if (value === "active") {
+            setSelectedStatus(undefined)
+        } else {
+            // @ts-ignore
+            setSelectedStatus(value)
+        }
+        refetch()
+    }
+
+    if (isLoading) return <LoadingBlock/>
 
     return <>
         <Title level={1} style={{textAlign: "center"}}>Заказы</Title>
+        <Button type={"primary"} onClick={() => setModal(true)}>Создать новый заказ</Button>
+        <br/>
+        <br/>
+        <Segmented defaultValue={"active"} onChange={(value) => onStatusChangeHandler(value.toString())} options={orderStatusList} />
+        <br/>
+        <br/>
         <Table
             onRow={record => ({
                 onClick: () => navigate(`/orders/${record.id}`)
@@ -84,6 +118,7 @@ const Orders = () => {
             columns={columns}
             dataSource={data?.data}
         />
+        <CreateOrderModal modal={modal} setModal={setModal}/>
     </>
 }
 
