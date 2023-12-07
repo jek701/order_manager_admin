@@ -94,10 +94,10 @@ const OrderStatusChangeBlock: React.FC<OrderStatusChangeBlockProps> = ({
                         </div>
                     </Col>
                     <Col span={9}>
-                        <CancelOrderButton id={id}/>
+                        <CancelOrderButton disabled={isLoading} id={id}/>
                     </Col>
                     <Col span={15}>
-                        <Button onClick={() => changeStatusHandler("ordered")} type={"primary"} block>Изменить статус
+                        <Button loading={isLoading} onClick={() => changeStatusHandler("ordered")} type={"primary"} block>Изменить статус
                             на: Товары заказаны</Button>
                     </Col>
                 </Row>
@@ -117,10 +117,10 @@ const OrderStatusChangeBlock: React.FC<OrderStatusChangeBlockProps> = ({
                         </div>
                     </Col>
                     <Col span={7}>
-                        <CancelOrderButton id={id}/>
+                        <CancelOrderButton disabled={isLoading} id={id}/>
                     </Col>
                     <Col span={17}>
-                        <Button onClick={() => changeStatusHandler("arrived_at_destination_country")} type={"primary"}
+                        <Button loading={isLoading} onClick={() => changeStatusHandler("arrived_at_destination_country")} type={"primary"}
                                 block>Изменить статус на: Прибыло в страну назначения</Button>
                     </Col>
                 </Row>
@@ -140,10 +140,10 @@ const OrderStatusChangeBlock: React.FC<OrderStatusChangeBlockProps> = ({
                         </div>
                     </Col>
                     <Col span={7}>
-                        <CancelOrderButton id={id}/>
+                        <CancelOrderButton disabled={isLoading} id={id}/>
                     </Col>
                     <Col span={17}>
-                        <Button onClick={() => changeStatusHandler("sent")} type={"primary"} block>Изменить статус на:
+                        <Button loading={isLoading} onClick={() => changeStatusHandler("sent")} type={"primary"} block>Изменить статус на:
                             Отправлен клиенту</Button>
                     </Col>
                 </Row>
@@ -163,10 +163,10 @@ const OrderStatusChangeBlock: React.FC<OrderStatusChangeBlockProps> = ({
                         </div>
                     </Col>
                     <Col span={7}>
-                        <CancelOrderButton id={id}/>
+                        <CancelOrderButton disabled={isLoading} id={id}/>
                     </Col>
                     <Col span={17}>
-                        <Button onClick={() => changeStatusHandler("closed")} type={"primary"} block>Изменить статус на:
+                        <Button loading={isLoading} onClick={() => changeStatusHandler("closed")} type={"primary"} block>Изменить статус на:
                             Закрыт</Button>
                     </Col>
                 </Row>

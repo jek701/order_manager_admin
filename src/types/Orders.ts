@@ -5,7 +5,12 @@ import {Products} from "./Products"
 export interface Orders {
     status: boolean,
     message: string,
-    data: Order[]
+    data: {
+        orders: Order[]
+        currentPage: number
+        total: number
+        pageSize: number
+    }
 }
 
 export interface Order {
@@ -21,7 +26,7 @@ export interface Order {
     profit_price: number
     items: Products["data"]
     customer: Clients["data"][0]
-    customerOrders: Orders["data"]
+    customerOrders: Orders["data"]["orders"]
     admin: Admin
     delivered_to_destination?: string
     delivered_to_client?: string

@@ -5,9 +5,10 @@ import TextArea from "antd/lib/input/TextArea"
 
 interface CancelOrderButtonProps {
     id: string
+    disabled?: boolean
 }
 
-const CancelOrderButton: React.FC<CancelOrderButtonProps> = ({id}) => {
+const CancelOrderButton: React.FC<CancelOrderButtonProps> = ({id, disabled}) => {
     const [modal, setModal] = useState(false)
     const [cancelReason, setCancelReason] = useState<string | undefined>(undefined)
     const [changeStatus, {isSuccess, isLoading, isError, error}] = useChangeOrderStatusMutation()
@@ -52,7 +53,7 @@ const CancelOrderButton: React.FC<CancelOrderButtonProps> = ({id}) => {
             <p>Чтобы отменить заказ, укажите причину, по которому вы хотите отменить заказ</p>
             <TextArea rows={4} value={cancelReason} onChange={(e) => setCancelReason(e.target.value)} placeholder={"Укажите причину отмены заказа"} />
         </Modal>
-        <Button onClick={() => setModal(true)} danger block>Отменить заказ</Button>
+        <Button disabled={disabled} onClick={() => setModal(true)} danger block>Отменить заказ</Button>
     </>
 }
 

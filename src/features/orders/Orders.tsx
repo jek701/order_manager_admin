@@ -85,7 +85,11 @@ const orderStatusList = [
 
 const Orders = () => {
     const [selectedStatus, setSelectedStatus] = useState<OrderStatuses | undefined>(undefined)
-    const {data, isLoading, isFetching, refetch} = useGetOrdersQuery({order_status: selectedStatus}, {refetchOnMountOrArgChange: true})
+    const [pagination, setPagination] = useState({
+        page: 1,
+        pageSize: 5
+    })
+    const {data, isLoading, isFetching, refetch} = useGetOrdersQuery({order_status: selectedStatus, page: pagination.page, pageSize: pagination.pageSize}, {refetchOnMountOrArgChange: true})
     const [modal, setModal] = useState(false)
     const navigate = useNavigate()
 
@@ -113,10 +117,23 @@ const Orders = () => {
             onRow={record => ({
                 onClick: () => navigate(`/orders/${record.id}`)
             })}
+            onChange={(pagination) => {
+                setPagination({
+                    page: pagination.current || 1,
+                    pageSize: pagination.pageSize || 10
+                })
+            }}
             loading={isFetching}
             style={{cursor: "pointer"}}
             columns={columns}
-            dataSource={data?.data}
+            dataSource={data?.data.orders}
+            pagination={{
+                current: data?.data.currentPage || pagination.page,
+                total: data?.data.total || 1,
+                pageSize: data?.data.pageSize || pagination.pageSize,
+                showSizeChanger: true,
+                pageSizeOptions: [5, 10, 15, 20, 30, 50]
+            }}
         />
         <CreateOrderModal modal={modal} setModal={setModal}/>
     </>
