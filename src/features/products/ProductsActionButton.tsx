@@ -62,7 +62,6 @@ const ProductsActionButton: React.FC<ProductsActionButtonProps> = ({record}) => 
                 ...value
             })
         }
-        console.log(value)
     }
 
     const onCloseHandler = () => {
