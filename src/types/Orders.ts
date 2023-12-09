@@ -24,7 +24,7 @@ export interface Order {
     items_original_price: number
     transportation_price: number
     profit_price: number
-    items: Products["data"]
+    items: Products["data"]["items"]
     customer: Clients["data"][0]
     customerOrders: Orders["data"]["orders"]
     admin: Admin

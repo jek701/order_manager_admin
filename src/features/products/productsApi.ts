@@ -1,6 +1,6 @@
 import {createApi} from "@reduxjs/toolkit/query/react"
 import {apiConfig} from "../../utils/api-config"
-import {Product, Products} from "../../types/Products"
+import {OptimizedProducts, Product, Products} from "../../types/Products"
 
 export interface CreateProductRequest {
     item_name: string
@@ -21,9 +21,20 @@ export const productsApi = createApi({
     baseQuery: apiConfig,
     tagTypes: ["products"],
     endpoints: build => ({
-        getAllProducts: build.query<Products, void>({
-            query: () => ({
+        getAllProducts: build.query<Products, {
+            page?: number,
+            pageSize?: number
+        }>({
+            query: (params) => ({
                 url: "items",
+                method: "GET",
+                params
+            }),
+            providesTags: ["products"]
+        }),
+        getOptimizedProducts: build.query<OptimizedProducts, void>({
+            query: () => ({
+                url: "items/optimized",
                 method: "GET"
             }),
             providesTags: ["products"]
@@ -75,4 +86,4 @@ export const productsApi = createApi({
     })
 })
 
-export const {useGetAllProductsQuery, useCreateNewProductMutation, useEditProductMutation ,useDeleteProductMutation} = productsApi
+export const {useGetAllProductsQuery, useCreateNewProductMutation, useEditProductMutation ,useDeleteProductMutation, useGetOptimizedProductsQuery} = productsApi

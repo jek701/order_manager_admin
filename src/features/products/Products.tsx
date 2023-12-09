@@ -9,7 +9,7 @@ import ProductsActionButton from "./ProductsActionButton"
 import CreateProductModal from "./CreateProductModal"
 import Title from "antd/es/typography/Title"
 
-const columns: ColumnsType<ProductType["data"][0]> = [
+const columns: ColumnsType<ProductType["data"]["items"][0]> = [
     {
         title: "Название",
         dataIndex: "item_name",
@@ -65,7 +65,16 @@ const columns: ColumnsType<ProductType["data"][0]> = [
 ]
 
 const Products = () => {
-    const {data, isLoading, isFetching} = useGetAllProductsQuery()
+    const [pagination, setPagination] = useState({
+        page: 1,
+        pageSize: 5
+    })
+    const {data, isLoading, isFetching} = useGetAllProductsQuery({
+        page: pagination.page,
+        pageSize: pagination.pageSize
+    }, {
+        refetchOnMountOrArgChange: true
+    })
     const [modal, setModal] = useState(false)
 
     if (isLoading) {
@@ -77,8 +86,25 @@ const Products = () => {
         <Button type={"primary"} onClick={() => setModal(true)}>Добавить новый продукт</Button>
         <br/>
         <br/>
-        <Table loading={isFetching} columns={columns} dataSource={data?.data}/>
-        <CreateProductModal modal={modal} setModal={setModal} />
+        <Table
+            onChange={(pagination) => {
+                setPagination({
+                    page: pagination.current || 1,
+                    pageSize: pagination.pageSize || 10
+                })
+            }}
+            pagination={{
+                current: data?.data.currentPage || pagination.page,
+                total: data?.data.total || 1,
+                pageSize: data?.data.pageSize || pagination.pageSize,
+                showSizeChanger: true,
+                pageSizeOptions: [5, 10, 15, 20, 30, 50]
+            }}
+            loading={isFetching}
+            columns={columns}
+            dataSource={data?.data.items}
+        />
+        <CreateProductModal modal={modal} setModal={setModal}/>
     </>
 }
 

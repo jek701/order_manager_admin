@@ -91,7 +91,7 @@ const Login: React.FC<LoginProps> = ({}) => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button size={"large"} block type="primary" htmlType="submit" className="login-form-button">
+                    <Button disabled={token !== undefined} loading={isLoading} size={"large"} block type="primary" htmlType="submit" className="login-form-button">
                         Войти
                     </Button>
                 </Form.Item>

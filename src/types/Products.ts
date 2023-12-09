@@ -1,7 +1,23 @@
 export interface Products {
     status: boolean,
     message: string,
-    data: Product[]
+    data: {
+        items: Product[]
+        currentPage: number
+        total: number
+        pageSize: number
+    }
+}
+
+export interface OptimizedProducts {
+    status: boolean,
+    message: string,
+    data: {
+        id: string,
+        item_name: string,
+        item_original_price: number,
+        item_price_with_profit: number
+    }[]
 }
 
 export interface Product {
