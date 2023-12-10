@@ -5,6 +5,7 @@ import Title from "antd/es/typography/Title"
 interface ColWithTitleProps {
     title: string
     children?: React.ReactNode | string
+    addInfo?: React.ReactNode | string
 }
 
 const useStyles = createUseStyles({
@@ -29,11 +30,12 @@ const useStyles = createUseStyles({
     }
 })
 
-const ColWithTitle: React.FC<ColWithTitleProps> = ({title, children}) => {
+const ColWithTitle: React.FC<ColWithTitleProps> = ({title, children, addInfo}) => {
     const classes = useStyles()
     return (
         <div className={classes.mainWrapper}>
             <Title level={4}>{title}</Title>
+            {addInfo}
             <div className={classes.children}>{children}</div>
         </div>
     )

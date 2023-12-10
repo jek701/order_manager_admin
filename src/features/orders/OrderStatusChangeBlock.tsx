@@ -6,6 +6,7 @@ import CancelOrderButton from "./CancelOrderButton"
 import dayjs from "dayjs"
 import InfoBlock from "../../components/InfoBlock"
 import moment from "moment"
+import {RangePickerProps} from "antd/es/date-picker"
 
 interface OrderStatusChangeBlockProps {
     order_status: OrderStatuses
@@ -103,6 +104,9 @@ const OrderStatusChangeBlock: React.FC<OrderStatusChangeBlockProps> = ({
                 </Row>
             )
         case "ordered":
+            const disabledDate1: RangePickerProps['disabledDate'] = (current) => {
+                return current && current < moment(ordered_date);
+            }
             return (
                 <Row gutter={10}>
                     <Col style={{marginBottom: "15px"}} span={24}>
@@ -113,7 +117,7 @@ const OrderStatusChangeBlock: React.FC<OrderStatusChangeBlockProps> = ({
                             justifyItems: "center"
                         }}>
                             <p>Выберите время, когда заказ прибыл в страну назначения</p>
-                            <DatePicker value={date} onChange={(value) => setDate(value)} style={{width: "100%"}}/>
+                            <DatePicker disabledDate={disabledDate1} value={date} onChange={(value) => setDate(value)} style={{width: "100%"}}/>
                         </div>
                     </Col>
                     <Col span={7}>
@@ -126,6 +130,9 @@ const OrderStatusChangeBlock: React.FC<OrderStatusChangeBlockProps> = ({
                 </Row>
             )
         case "arrived_at_destination_country":
+            const disabledDate2: RangePickerProps['disabledDate'] = (current) => {
+                return current && current < moment(delivered_to_destination);
+            }
             return (
                 <Row gutter={10}>
                     <Col style={{marginBottom: "15px"}} span={24}>
@@ -136,7 +143,7 @@ const OrderStatusChangeBlock: React.FC<OrderStatusChangeBlockProps> = ({
                             justifyItems: "center"
                         }}>
                             <p>Выберите время, когда заказ был отправлен клиенту</p>
-                            <DatePicker value={date} onChange={(value) => setDate(value)} style={{width: "100%"}}/>
+                            <DatePicker disabledDate={disabledDate2} value={date} onChange={(value) => setDate(value)} style={{width: "100%"}}/>
                         </div>
                     </Col>
                     <Col span={7}>
@@ -149,6 +156,9 @@ const OrderStatusChangeBlock: React.FC<OrderStatusChangeBlockProps> = ({
                 </Row>
             )
         case "sent":
+            const disabledDate3: RangePickerProps['disabledDate'] = (current) => {
+                return current && current < moment(delivered_to_client);
+            }
             return (
                 <Row gutter={10}>
                     <Col style={{marginBottom: "15px"}} span={24}>
@@ -159,7 +169,7 @@ const OrderStatusChangeBlock: React.FC<OrderStatusChangeBlockProps> = ({
                             justifyItems: "center"
                         }}>
                             <p>Выберите время, когда заказ был закрыт</p>
-                            <DatePicker value={date} onChange={(value) => setDate(value)} style={{width: "100%"}}/>
+                            <DatePicker disabledDate={disabledDate3} value={date} onChange={(value) => setDate(value)} style={{width: "100%"}}/>
                         </div>
                     </Col>
                     <Col span={7}>

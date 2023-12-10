@@ -12,6 +12,7 @@ import {formatPhone} from "../../utils/phoneNumberFormatter"
 import LeftArrowButton from "../../components/LeftArrowButton"
 import MenuDrawer from "../../components/MenuDrawer"
 import OrderStatusChangeBlock from "./OrderStatusChangeBlock"
+import Conversation from "../conversation/Conversation"
 
 interface OrderMoreProps {
 
@@ -65,8 +66,6 @@ const OrderMore: React.FC<OrderMoreProps> = ({}) => {
                                 </InfoBlock>
                             </ColWithTitle>
                         </Col>
-                    </Col>
-                    <Col span={12}>
                         <Col span={24}>
                             <ColWithTitle title={"Информация о клиенте"}>
                                 <InfoBlock title={"ID клиента:"}>{data?.data?.customer.id}</InfoBlock>
@@ -105,6 +104,8 @@ const OrderMore: React.FC<OrderMoreProps> = ({}) => {
                                 </InfoBlock>}
                             </ColWithTitle>
                         </Col>
+                    </Col>
+                    <Col span={12}>
                         <Col span={24}>
                             <ColWithTitle title={"Информация об администраторе"}>
                                 <InfoBlock title={"ID администратора:"}>{data?.data?.admin.id}</InfoBlock>
@@ -123,6 +124,13 @@ const OrderMore: React.FC<OrderMoreProps> = ({}) => {
                                                         id={data.data.id} order_status={data.data.order_status}/>
                             </ColWithTitle>
                         </Col>
+                        {data.data.order_status === "canceled" || data.data.order_status === "closed" ? "" :
+                            <Col span={24}>
+                                <ColWithTitle title={"Разговор"}>
+                                    <Conversation order_id={data.data.id} customer_id={data.data.customer_id}/>
+                                </ColWithTitle>
+                            </Col>
+                        }
                     </Col>
                 </Row>
             </div>

@@ -1,11 +1,11 @@
-import React, {useEffect, useRef, useState} from "react"
+import React, {useEffect, useMemo, useRef, useState} from "react"
 import {createUseStyles, useTheme} from "react-jss"
 import {BaseOptionType} from "rc-select/lib/Select"
 import {GlobalToken} from "antd/es/theme/interface"
 import {DownOutlined} from "@ant-design/icons"
-import {motion, Variants} from "framer-motion"
+import {Dropdown} from "antd"
 
-const useStyles = createUseStyles<string, {isOpen: boolean}, GlobalToken>(theme => ({
+const useStyles = createUseStyles<string, { isOpen: boolean }, GlobalToken>(theme => ({
     mainBlock: {
         position: "relative"
     },
@@ -77,11 +77,6 @@ const useStyles = createUseStyles<string, {isOpen: boolean}, GlobalToken>(theme 
     }
 }))
 
-const container: Variants = {
-    hidden: {opacity: 0, y: -10, visibility: "hidden"},
-    visible: {opacity: 1, y: 0, visibility: "visible"}
-}
-
 interface MenuDrawerProps extends BaseOptionType {
     label: string
     defaultPlaceholder?: string
@@ -113,31 +108,30 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({label, options, defaultPlacehold
         }
     }, [ref])
 
+    const items = useMemo(() => {
+        return options.map((option, index) => {
+            return {
+                key: `option-${index}-${option.label}`,
+                label: option.label
+            }
+        })
+    }, [options])
+
     return (
         <div ref={ref} onClick={() => setIsOpen(!isOpen)} className={classes.mainBlock}>
-            <label className={classes.wrapper}>
-                <span className={classes.label}>{label}</span>
-                <div className={classes.sub}>
-                    {
-                        defaultPlaceholder ?
-                            <p>{defaultPlaceholder}</p> :
-                            <p>{options[0].label}</p>
-                    }
-                    {options.length > 1 && <DownOutlined />}
-                </div>
-            </label>
-            <motion.div
-                variants={container}
-                initial="hidden"
-                animate={isOpen ? "visible" : "hidden"}
-                className={classes.list}
-            >
-                {options.map((option, index) => {
-                    return (
-                        <div className={classes.listBlock} key={index}>{option.label}</div>
-                    )
-                })}
-            </motion.div>
+            <Dropdown menu={{items}} trigger={["click"]} destroyPopupOnHide={true} autoAdjustOverflow={false}>
+                <label className={classes.wrapper}>
+                    <span className={classes.label}>{label}</span>
+                    <div className={classes.sub}>
+                        {
+                            defaultPlaceholder ?
+                                <p>{defaultPlaceholder}</p> :
+                                <p>{options[0].label}</p>
+                        }
+                        {options.length > 1 && <DownOutlined/>}
+                    </div>
+                </label>
+            </Dropdown>
         </div>
     )
 }
