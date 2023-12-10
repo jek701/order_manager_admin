@@ -7,13 +7,15 @@ import Title from "antd/es/typography/Title"
 import styles from "./style.module.css"
 import moment from "moment"
 import cn from "classnames"
+import {OrderStatuses} from "../../types/Orders"
 
 interface ConversationProps {
     order_id: string
     customer_id?: string
+    order_status?: OrderStatuses
 }
 
-const Conversation: React.FC<ConversationProps> = ({order_id, customer_id}) => {
+const Conversation: React.FC<ConversationProps> = ({order_id, customer_id, order_status}) => {
     const messageBlockRef = React.useRef<HTMLDivElement>(null)
     const [conversation, setConversation] = useState<Message[]>([])
     const [noConversation, setNoConversation] = useState<boolean>(false)
@@ -136,29 +138,33 @@ const Conversation: React.FC<ConversationProps> = ({order_id, customer_id}) => {
                             </div>
                         }
                     </div>
-                    <div className={styles.newMessageBlock}>
-                        <Input.TextArea
-                            value={message}
-                            autoSize={{
-                                minRows: 2,
-                                maxRows: 6
-                            }}
-                            maxLength={100}
-                            placeholder={"Введите ваше сообщение"}
-                            onChange={(value) => {
-                                setMessage(value.target.value)
-                            }}
-                            showCount={true}
-                        />
-                        <Button disabled={message.length > 100 || message.length <= 0} type={"primary"}
-                                loading={isSendMessageLoading}
-                                onClick={() => sendMessageHandler()}>Отправить</Button>
-                    </div>
+                    {order_status === "closed" || order_status === "canceled" ?
+                        <div></div>
+                        :
+                        <div className={styles.newMessageBlock}>
+                            <Input.TextArea
+                                value={message}
+                                autoSize={{
+                                    minRows: 2,
+                                    maxRows: 6
+                                }}
+                                maxLength={100}
+                                placeholder={"Введите ваше сообщение"}
+                                onChange={(value) => {
+                                    setMessage(value.target.value)
+                                }}
+                                showCount={true}
+                            />
+                            <Button disabled={message.length > 100 || message.length <= 0} type={"primary"}
+                                    loading={isSendMessageLoading}
+                                    onClick={() => sendMessageHandler()}>Отправить</Button>
+                        </div>}
                 </div>
                 :
                 <div className={styles.noConversationBlock}>
                     <Title level={5}>Беседа для этого заказа не был найден</Title>
-                    <Button onClick={newConversationHandler} block type={"primary"}>Начать беседу</Button>
+                    {order_status === "canceled" || order_status === "closed" ? <div></div> :
+                        <Button onClick={newConversationHandler} block type={"primary"}>Начать беседу</Button>}
                 </div>
             }
         </div>

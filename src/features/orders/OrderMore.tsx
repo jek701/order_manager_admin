@@ -124,13 +124,11 @@ const OrderMore: React.FC<OrderMoreProps> = ({}) => {
                                                         id={data.data.id} order_status={data.data.order_status}/>
                             </ColWithTitle>
                         </Col>
-                        {data.data.order_status === "canceled" || data.data.order_status === "closed" ? "" :
-                            <Col span={24}>
-                                <ColWithTitle title={"Разговор"}>
-                                    <Conversation order_id={data.data.id} customer_id={data.data.customer_id}/>
-                                </ColWithTitle>
-                            </Col>
-                        }
+                        <Col span={24}>
+                            <ColWithTitle title={"Разговор"}>
+                                <Conversation order_status={data.data.order_status} order_id={data.data.id} customer_id={data.data.customer_id}/>
+                            </ColWithTitle>
+                        </Col>
                     </Col>
                 </Row>
             </div>
