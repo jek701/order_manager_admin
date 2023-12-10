@@ -66,6 +66,10 @@ const Layout: React.FC<LayoutProps> = ({children}) => {
             hidden: true
         },
         {
+            title: "Статистика использования токенов",
+            link: "/token-usage",
+        },
+        {
             title: "Админы",
             link: "/admins",
         }

@@ -8,6 +8,7 @@ import {brandsApi} from "./features/brands/brandsApi"
 import {dashboardApi} from "./features/dashboard/dashboardApi"
 import {adminsApi} from "./features/admins/adminsApi"
 import {conversationApi} from "./features/conversation/conversationApi"
+import {tokenUsageApi} from "./features/token-usage/tokenUsageApi"
 import auth from "./features/auth/authSlice"
 
 const reducers = {
@@ -19,6 +20,7 @@ const reducers = {
     [dashboardApi.reducerPath]: dashboardApi.reducer,
     [adminsApi.reducerPath]: adminsApi.reducer,
     [conversationApi.reducerPath]: conversationApi.reducer,
+    [tokenUsageApi.reducerPath]: tokenUsageApi.reducer,
     auth
 }
 
@@ -33,6 +35,7 @@ const store = configureStore({
         .concat(dashboardApi.middleware)
         .concat(adminsApi.middleware)
         .concat(conversationApi.middleware)
+        .concat(tokenUsageApi.middleware)
 })
 
 export type StoreState = ReturnType<typeof store.getState>

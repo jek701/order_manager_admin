@@ -10,6 +10,7 @@ const Orders = React.lazy(() => import("src/features/orders/Orders"))
 const Brands = React.lazy(() => import("src/features/brands/Brands"))
 const Dashboard = React.lazy(() => import("src/features/dashboard/Dashboard"))
 const OrderMore = React.lazy(() => import("src/features/orders/OrderMore"))
+const TokenUsage = React.lazy(() => import("src/features/token-usage/TokenUsage"))
 const Admins = React.lazy(() => import("src/features/admins/Admin"))
 const ErrorNotFound = React.lazy(() => import("src/components/ErrorNotFound"))
 
@@ -26,6 +27,7 @@ const App = () => {
                         <Route path={"/orders"} element={<Orders />} />
                         <Route path={"/brands"} element={<Brands />} />
                         <Route path={"/orders/:id"} element={<OrderMore />} />
+                        <Route path={"/token-usage"} element={<TokenUsage />} />
                         <Route path={"/admins"} element={<Admins />} />
                         <Route path={"/"} element={<Dashboard />} />
                         <Route path="*" element={<ErrorNotFound />} />
