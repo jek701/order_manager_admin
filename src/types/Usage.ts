@@ -1,3 +1,5 @@
+import {Admin} from "./Admin"
+
 export interface TokenUsageTotal {
     total_cost: number,
     total_completion_tokens: string,
@@ -12,7 +14,8 @@ export interface TokenUsageAdmin {
     total_completion_tokens: string,
     total_prompt_tokens: string,
     total_tokens: string,
-    total_requests: number
+    total_requests: number,
+    admin: Admin
 }
 
 export interface TokenUsageModel {

@@ -8,6 +8,9 @@ export interface Dashboard {
         order: Order[],
         client: Clients["data"],
         profit: number,
-        total: number
+        total: number,
+        totalClients: number,
+        totalOrders: number,
+        totalAdmins: number
     }
 }
