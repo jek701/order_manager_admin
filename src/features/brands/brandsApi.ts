@@ -23,7 +23,7 @@ export const brandsApi = createApi({
             }),
             providesTags: ["brands"]
         }),
-        getBrandByID: builder.query<Brand, number>({
+        getBrandByID: builder.query<Brand, string | undefined>({
             query: id => `brands/${id}`
         }),
         createBrand: builder.mutation<Brand, CreateBrandRequest>({

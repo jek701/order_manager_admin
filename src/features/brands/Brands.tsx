@@ -7,6 +7,7 @@ import LoadingBlock from "../../components/LoadingBlock"
 import CreateBrandModal from "./CreateBrandModal"
 import BrandActionButton from "./BrandActionButton"
 import Title from "antd/es/typography/Title"
+import {useNavigate} from "react-router-dom"
 
 interface BrandsProps {
 
@@ -40,7 +41,7 @@ const columns: ColumnsType<Brand["data"][0]> = [
         title: "Действия",
         key: "actions",
         render: (_, record) => {
-            return <BrandActionButton record={record} />
+            return <BrandActionButton record={record}/>
         }
     }
 ]
@@ -48,6 +49,7 @@ const columns: ColumnsType<Brand["data"][0]> = [
 const Brands: React.FC<BrandsProps> = ({}) => {
     const {data, isLoading, isFetching} = useGetBrandsQuery()
     const [modal, setModal] = useState(false)
+    const navigate = useNavigate()
 
     if (isLoading) return <LoadingBlock/>
 
@@ -56,7 +58,14 @@ const Brands: React.FC<BrandsProps> = ({}) => {
         <Button type={"primary"} onClick={() => setModal(true)}>Добавить новый бренд</Button>
         <br/>
         <br/>
-        <Table loading={isFetching} columns={columns} dataSource={data?.data}/>
+        <Table
+            onRow={record => ({
+                onClick: () => navigate(`/brands/${record.id}`)
+            })}
+            loading={isFetching}
+            columns={columns}
+            dataSource={data?.data}
+        />
         <CreateBrandModal modal={modal} setModal={setModal}/>
     </>
 }

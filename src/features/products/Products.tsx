@@ -8,8 +8,9 @@ import Link from "antd/es/typography/Link"
 import ProductsActionButton from "./ProductsActionButton"
 import CreateProductModal from "./CreateProductModal"
 import Title from "antd/es/typography/Title"
+import {numberToDecimal} from "../../utils/numberToDecimal"
 
-const columns: ColumnsType<ProductType["data"]["items"][0]> = [
+export const productColumns: ColumnsType<ProductType["data"]["items"][0]> = [
     {
         title: "Название",
         dataIndex: "item_name",
@@ -21,7 +22,7 @@ const columns: ColumnsType<ProductType["data"]["items"][0]> = [
         dataIndex: "item_original_price",
         key: "item_original_price",
         render: (value) => {
-            return `${value}$`
+            return `${numberToDecimal(value)}$`
         }
     },
     {
@@ -30,7 +31,7 @@ const columns: ColumnsType<ProductType["data"]["items"][0]> = [
         key: "item_price_with_profit",
         render: (value, record) => {
             const profit_percent = record.item_price_with_profit / record.item_original_price * 100 - 100
-            return `${value}$ (+${profit_percent.toFixed(2)}%)`
+            return `${numberToDecimal(value)}$ (+${profit_percent.toFixed(2)}%)`
         }
     },
     {
@@ -43,7 +44,7 @@ const columns: ColumnsType<ProductType["data"]["items"][0]> = [
         title: "Вес товара (гр.)",
         dataIndex: "item_weight",
         key: "item_weight",
-        render: value => `${value} гр.`
+        render: value => `${numberToDecimal(value)} гр.`
     },
     {
         title: "Доступность",
@@ -101,7 +102,7 @@ const Products = () => {
                 pageSizeOptions: [5, 10, 15, 20, 30, 50]
             }}
             loading={isFetching}
-            columns={columns}
+            columns={productColumns}
             dataSource={data?.data.items}
         />
         <CreateProductModal modal={modal} setModal={setModal}/>

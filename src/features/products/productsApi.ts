@@ -23,7 +23,8 @@ export const productsApi = createApi({
     endpoints: build => ({
         getAllProducts: build.query<Products, {
             page?: number,
-            pageSize?: number
+            pageSize?: number,
+            brand_id?: string
         }>({
             query: (params) => ({
                 url: "items",
