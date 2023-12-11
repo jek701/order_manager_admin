@@ -44,7 +44,7 @@ const columns: ColumnsType<TokenUsageAdmin> = [
         title: "Сумма, использованная за все время",
         dataIndex: "total_cost",
         key: "total_cost",
-        render: (value) => <span>{value.toFixed(2)}$</span>
+        render: (value) => <span>{value && value.toFixed(2)}$</span>
     }
 ]
 

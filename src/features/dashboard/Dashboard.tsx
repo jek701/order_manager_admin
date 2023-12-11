@@ -41,10 +41,10 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
     if (isSuccess && data) {
         return <>
             <Space direction={"vertical"}>
-                {orders && admins && <Space direction={"vertical"}>
+                {orders && admins && (orders.data.length > 0 || admins.data.length > 0) && <Space direction={"vertical"}>
                     <Title level={3}>Диаграммы</Title>
                     <Space direction={"horizontal"} size={"large"} align={"start"}>
-                        <Card size={"default"} title={"Диаграмма заказов по статусам"}>
+                        {orders.data.length > 0 && <Card size={"default"} title={"Диаграмма заказов по статусам"}>
                             <Pie data={{
                                 labels: orders.data.map(order => {
                                     return returnOrderStatus(order.order_status)
@@ -58,8 +58,8 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
                                     })
                                 }]
                             }}/>
-                        </Card>
-                        <Card size={"default"} title={"Диаграмма по обработанным заказам"}>
+                        </Card>}
+                        {admins.data.length > 0 && <Card size={"default"} title={"Диаграмма по обработанным заказам"}>
                             <Pie data={{
                                 labels: admins.data.map(order => {
                                     return order.admin.name
@@ -73,7 +73,7 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
                                     })
                                 }]
                             }}/>
-                        </Card>
+                        </Card>}
                     </Space>
                 </Space>}
                 <Space direction={"vertical"}>

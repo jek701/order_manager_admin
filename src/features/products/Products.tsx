@@ -31,7 +31,7 @@ export const productColumns: ColumnsType<ProductType["data"]["items"][0]> = [
         key: "item_price_with_profit",
         render: (value, record) => {
             const profit_percent = record.item_price_with_profit / record.item_original_price * 100 - 100
-            return `${numberToDecimal(value)}$ (+${profit_percent.toFixed(2)}%)`
+            return `${numberToDecimal(value)}$ (+${profit_percent && profit_percent.toFixed(2)}%)`
         }
     },
     {

@@ -18,7 +18,7 @@ const TokenUsageTotal: React.FC<TokenUsageTotalProps> = ({}) => {
                 <p>Использовано токенов (всего): <strong>{numberToDecimal(Number(data.data[0].total_tokens))}</strong></p>
                 <p>Использовано токенов (запрос): <strong>{numberToDecimal(Number(data.data[0].total_completion_tokens))}</strong></p>
                 <p>Использовано токенов (ответ): <strong>{numberToDecimal(Number(data.data[0].total_prompt_tokens))}</strong></p>
-                <p>Сумма за использование токенов: <strong>{data.data[0].total_cost.toFixed(2)}$</strong></p>
+                <p>Сумма за использование токенов: <strong>{data.data[0].total_cost && data.data[0].total_cost.toFixed(2)}$</strong></p>
             </div>
         )
     }
