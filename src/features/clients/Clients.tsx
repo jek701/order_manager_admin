@@ -9,7 +9,6 @@ import LoadingBlock from "../../components/LoadingBlock"
 import CreateClientModal from "./CreateClientModal"
 import ClientsActionButton from "./ClientsActionButton"
 import Title from "antd/es/typography/Title"
-import {useNavigate} from "react-router-dom"
 
 interface ClientsProps {
 
@@ -70,7 +69,6 @@ const columns: ColumnsType<ClientsType["data"][0]> = [
 
 const Clients: React.FC<ClientsProps> = ({}) => {
     const {data, isLoading, isFetching} = useGetClientsQuery()
-    const navigate = useNavigate()
     const [modal, setModal] = useState(false)
 
     if (isLoading) {
@@ -83,9 +81,9 @@ const Clients: React.FC<ClientsProps> = ({}) => {
         <br/>
         <br/>
         <Table
-            onRow={record => ({
-                onClick: () => navigate(`/clients/${record.id}/orders`)
-            })}
+            // onRow={(record) => ({
+            //     onClick: () => navigate(`/clients/${record.id}/orders`)
+            // })}
             loading={isFetching}
             columns={columns}
             dataSource={data?.data}

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {useGetDashboardQuery} from "./dashboardApi"
+import {useGetDashboardQuery, useGetOrdersByAdminQuery, useGetOrdersByStatusQuery} from "./dashboardApi"
 import {Button, Card, Space, Tag} from "antd"
 import moment from "moment"
 import Title from "antd/es/typography/Title"
@@ -12,6 +12,10 @@ import {getToken} from "../../utils/token"
 import {useNavigate} from "react-router-dom"
 import CreateOrderModal from "../orders/CreateOrderModal"
 import TokenUsageTotal from "../token-usage/TokenUsageTotal"
+import {ArcElement, Chart as ChartJS, Legend, Tooltip} from "chart.js"
+import {Pie} from "react-chartjs-2"
+
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 interface DashboardProps {
 
@@ -19,6 +23,8 @@ interface DashboardProps {
 
 const Dashboard: React.FC<DashboardProps> = ({}) => {
     const {data, isSuccess, isLoading} = useGetDashboardQuery()
+    const {data: orders} = useGetOrdersByStatusQuery()
+    const {data: admins} = useGetOrdersByAdminQuery()
     const [newClientModal, setNewClientModal] = useState(false)
     const [newOrderModal, setNewOrderModal] = useState(false)
     const token = getToken()
@@ -35,6 +41,41 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
     if (isSuccess && data) {
         return <>
             <Space direction={"vertical"}>
+                {orders && admins && <Space direction={"vertical"}>
+                    <Title level={3}>Диаграммы</Title>
+                    <Space direction={"horizontal"} size={"large"} align={"start"}>
+                        <Card size={"default"} title={"Диаграмма заказов по статусам"}>
+                            <Pie data={{
+                                labels: orders.data.map(order => {
+                                    return returnOrderStatus(order.order_status)
+                                }),
+                                datasets: [{
+                                    data: orders.data.map(order => {
+                                        return order.count
+                                    }),
+                                    backgroundColor: orders.data.map(order => {
+                                        return order.color
+                                    })
+                                }]
+                            }}/>
+                        </Card>
+                        <Card size={"default"} title={"Диаграмма по обработанным заказам"}>
+                            <Pie data={{
+                                labels: admins.data.map(order => {
+                                    return order.admin.name
+                                }),
+                                datasets: [{
+                                    data: admins.data.map(order => {
+                                        return order.count
+                                    }),
+                                    backgroundColor: admins.data.map(order => {
+                                        return order.color
+                                    })
+                                }]
+                            }}/>
+                        </Card>
+                    </Space>
+                </Space>}
                 <Space direction={"vertical"}>
                     <Title level={3}>Виджеты</Title>
                     <Space wrap direction="horizontal" size="large" align={"start"}>

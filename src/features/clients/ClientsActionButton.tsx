@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {Button, Dropdown, MenuProps, Modal, notification} from "antd"
-import {DeleteOutlined, DownOutlined, EditOutlined} from "@ant-design/icons"
+import {DeleteOutlined, DownOutlined, EditOutlined, UserOutlined} from "@ant-design/icons"
 import {Clients as ClientsType} from "../../types/Clients"
 import {useDeleteClientMutation, useEditCustomerMutation} from "./clientsApi"
 import ClientForm from "./ClientForm"
@@ -14,6 +14,10 @@ const items: MenuProps["items"] = [
     {
         key: "update",
         label: <><EditOutlined/> Изменить</>
+    },
+    {
+        key: "go_to",
+        label: <><UserOutlined /> Перейти к пользователю</>
     },
     {
         key: "delete",
@@ -38,6 +42,9 @@ const ClientsActionButton: React.FC<ClientsActionButtonProps> = ({record}) => {
         }
         if (key === "update") {
             setEditModal(true)
+        }
+        if (key === "go_to") {
+            window.open(`clients/${record.id}/orders`)
         }
     }
 
