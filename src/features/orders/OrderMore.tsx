@@ -49,7 +49,7 @@ const OrderMore: React.FC<OrderMoreProps> = ({}) => {
                                     <Tag
                                         color="green">+{Math.round((data.data.profit_price / data.data.total_price) * 100)}%</Tag> : ""}
                                 </InfoBlock>
-                                <InfoBlock>
+                                {data.data.items && <InfoBlock>
                                     <MenuDrawer label={"Список товаров"} defaultPlaceholder={"Развернуть"} options={
                                         data.data.items.map(item => {
                                             return {
@@ -63,11 +63,11 @@ const OrderMore: React.FC<OrderMoreProps> = ({}) => {
                                             }
                                         })
                                     }/>
-                                </InfoBlock>
+                                </InfoBlock>}
                             </ColWithTitle>
                         </Col>
                         <Col span={24}>
-                            <ColWithTitle title={"Информация о клиенте"}>
+                            {data.data.customer && <ColWithTitle title={"Информация о клиенте"}>
                                 <InfoBlock title={"ID клиента:"}>{data?.data?.customer.id}</InfoBlock>
                                 <InfoBlock title={"Имя клиента:"}>{data?.data?.customer.name}</InfoBlock>
                                 <InfoBlock
@@ -102,18 +102,18 @@ const OrderMore: React.FC<OrderMoreProps> = ({}) => {
                                         label={"Список Заказов:"}
                                     />
                                 </InfoBlock>}
-                            </ColWithTitle>
+                            </ColWithTitle>}
                         </Col>
                     </Col>
                     <Col span={12}>
-                        <Col span={24}>
+                        {data.data.admin && <Col span={24}>
                             <ColWithTitle title={"Информация об администраторе"}>
                                 <InfoBlock title={"ID администратора:"}>{data?.data?.admin.id}</InfoBlock>
                                 <InfoBlock title={"Имя администратора:"}>{data?.data?.admin.name}</InfoBlock>
                                 <InfoBlock
                                     title={"Телефон администратора:"}>{formatPhone(data?.data?.admin.phone_number)}</InfoBlock>
                             </ColWithTitle>
-                        </Col>
+                        </Col>}
                         <Col span={24}>
                             <ColWithTitle title={"Статус заказа"}>
                                 <OrderStatusChangeBlock cancel_closed_date={data.data.cancel_closed_date}

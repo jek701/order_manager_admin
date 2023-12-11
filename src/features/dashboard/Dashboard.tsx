@@ -75,9 +75,9 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
                                         до: <strong>{moment(order.deliver_until).format("DD.MM.YYYY HH:mm")}</strong>
                                     </p>
                                     <p>Количество товаров: <strong>{order.item_ids.split(",").length}</strong></p>
-                                    <p>Обработал: <strong>{order.admin.name}</strong></p>
-                                    <p>Имя клиент: <strong>{order.customer.name}</strong></p>
-                                    <p>Номер клиент: <strong>{formatPhone(order.customer.phone_number)}</strong></p>
+                                    <p>Обработал: <strong>{order.admin?.name}</strong></p>
+                                    <p>Имя клиент: <strong>{order.customer?.name}</strong></p>
+                                    <p>Номер клиент: <strong>{formatPhone(order.customer?.phone_number)}</strong></p>
                                     <Button href={"/orders"}>Перейти на страницу заказов</Button>
                                 </Card>
                             )

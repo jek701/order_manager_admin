@@ -9,6 +9,7 @@ import LoadingBlock from "../../components/LoadingBlock"
 import CreateClientModal from "./CreateClientModal"
 import ClientsActionButton from "./ClientsActionButton"
 import Title from "antd/es/typography/Title"
+import {useNavigate} from "react-router-dom"
 
 interface ClientsProps {
 
@@ -19,7 +20,8 @@ const columns: ColumnsType<ClientsType["data"][0]> = [
         title: "Имя",
         dataIndex: "name",
         key: "name",
-        render: (value, record) => <span onClick={() => navigator.clipboard.writeText(record.id.toString())}>{value}</span>
+        render: (value, record) => <span
+            onClick={() => navigator.clipboard.writeText(record.id.toString())}>{value}</span>
     },
     {
         title: "Фамилия",
@@ -48,7 +50,8 @@ const columns: ColumnsType<ClientsType["data"][0]> = [
         title: "Ссылка профиля",
         dataIndex: "profile_url",
         key: "profile_url",
-        render: value => value ? <Link target={"_blank"} href={value}>Ссылка</Link> : <Tag color={"red"}>Не указана</Tag>
+        render: value => value ? <Link target={"_blank"} href={value}>Ссылка</Link> :
+            <Tag color={"red"}>Не указана</Tag>
     },
     {
         title: "Адрес",
@@ -60,17 +63,18 @@ const columns: ColumnsType<ClientsType["data"][0]> = [
         title: "Действия",
         key: "actions",
         render: (_, record) => {
-            return <ClientsActionButton record={record} />
+            return <ClientsActionButton record={record}/>
         }
     }
 ]
 
 const Clients: React.FC<ClientsProps> = ({}) => {
     const {data, isLoading, isFetching} = useGetClientsQuery()
+    const navigate = useNavigate()
     const [modal, setModal] = useState(false)
 
     if (isLoading) {
-        return <LoadingBlock />
+        return <LoadingBlock/>
     }
 
     return <>
@@ -78,8 +82,15 @@ const Clients: React.FC<ClientsProps> = ({}) => {
         <Button type={"primary"} onClick={() => setModal(true)}>Добавить нового клиента</Button>
         <br/>
         <br/>
-        <Table loading={isFetching} columns={columns} dataSource={data?.data} />
-        <CreateClientModal modal={modal} setModal={setModal} />
+        <Table
+            onRow={record => ({
+                onClick: () => navigate(`/clients/${record.id}/orders`)
+            })}
+            loading={isFetching}
+            columns={columns}
+            dataSource={data?.data}
+        />
+        <CreateClientModal modal={modal} setModal={setModal}/>
     </>
 }
 

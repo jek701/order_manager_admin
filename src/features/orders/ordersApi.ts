@@ -11,14 +11,16 @@ export const ordersApi = createApi({
         getOrders: builder.query<Orders, {
             order_status?: Order["order_status"],
             page?: number,
-            pageSize?: number
+            pageSize?: number,
+            client_id?: string
         }>({
-            query: ({order_status, page, pageSize}) => ({
+            query: ({order_status, page, pageSize, client_id}) => ({
                 url: "orders",
                 params: {
                     order_status,
                     page,
-                    pageSize
+                    pageSize,
+                    client_id
                 }
             }),
             providesTags: ["orders"]

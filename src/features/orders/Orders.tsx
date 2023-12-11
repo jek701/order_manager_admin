@@ -10,8 +10,9 @@ import {useNavigate} from "react-router-dom"
 import LoadingBlock from "../../components/LoadingBlock"
 import Title from "antd/es/typography/Title"
 import CreateOrderModal from "./CreateOrderModal"
+import {numberToDecimal} from "../../utils/numberToDecimal"
 
-const columns: ColumnsType<Order> = [
+export const orderColumns: ColumnsType<Order> = [
     {
         title: "Дата заказа",
         dataIndex: "order_date",
@@ -34,19 +35,19 @@ const columns: ColumnsType<Order> = [
         title: "Итоговая цена",
         dataIndex: "total_price",
         key: "price",
-        render: value => `${value}$`
+        render: value => `${numberToDecimal(value)}$`
     },
     {
         title: "Цена продуктов",
         dataIndex: "items_original_price",
         key: "products_price",
-        render: value => `${value}$`
+        render: value => `${numberToDecimal(value)}$`
     },
     {
         title: "Цена доставки",
         dataIndex: "transportation_price",
         key: "delivery_price",
-        render: value => `${value}$`
+        render: value => `${numberToDecimal(value)}$`
     },
     {
         title: "Клиент",
@@ -58,7 +59,7 @@ const columns: ColumnsType<Order> = [
         title: "Кто принял заказ",
         dataIndex: "accepted_by",
         key: "accepted_by",
-        render: (_, record) => record.admin.name
+        render: (_, record) => record.admin?.name
     }
     // {
     //     title: "Действия",
@@ -125,7 +126,7 @@ const Orders = () => {
             }}
             loading={isFetching}
             style={{cursor: "pointer"}}
-            columns={columns}
+            columns={orderColumns}
             dataSource={data?.data.orders}
             pagination={{
                 current: data?.data.currentPage || pagination.page,

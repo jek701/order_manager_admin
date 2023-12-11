@@ -4,6 +4,7 @@ import LoadingBlock from "../../components/LoadingBlock"
 import {Table} from "antd"
 import {ColumnsType} from "antd/es/table"
 import {TokenUsageConversation} from "../../types/Usage"
+import {numberToDecimal} from "../../utils/numberToDecimal"
 
 interface TokenUsageByAdminProps {
 
@@ -19,19 +20,19 @@ const columns: ColumnsType<TokenUsageConversation> = [
         title: "Использовано токенов (всего)",
         dataIndex: "total_tokens",
         key: "total_tokens",
-        render: (value) => new Intl.NumberFormat("ru-RU").format(value)
+        render: (value) => numberToDecimal(value)
     },
     {
         title: "Использовано токенов (запрос)",
         dataIndex: "total_completion_tokens",
         key: "completion_tokens",
-        render: (value) => new Intl.NumberFormat("ru-RU").format(value)
+        render: (value) => numberToDecimal(value)
     },
     {
         title: "Использовано токенов (ответ)",
         dataIndex: "total_prompt_tokens",
         key: "prompt_tokens",
-        render: (value) => new Intl.NumberFormat("ru-RU").format(value)
+        render: (value) => numberToDecimal(value)
     },
     {
         title: "Сумма, использованная за все время",
